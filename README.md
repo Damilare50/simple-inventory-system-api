@@ -16,7 +16,9 @@ Replace `localhost` and `3000` with the appropriate host and port if your applic
 
 1. Create a `.env` based on `.env.example` in the root directory. Update the variables.
 
-2. Start your application:
+2. run `npm install`
+
+3. Start your application:
    ```bash
    npm run start
    ```
