@@ -95,6 +95,10 @@ export class CategoryService {
     await category.deleteOne();
   }
 
+  async fetch(user: UserDocument, id: string): Promise<CategoryDocument> {
+    return await this.model.findOne({ user, _id: id });
+  }
+
   private async getUser(auth: string): Promise<UserDocument> {
     const token = auth.split(' ')[1];
     const { jwt } = await this.userService.authService.decode(token);
