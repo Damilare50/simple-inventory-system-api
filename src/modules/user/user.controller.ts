@@ -12,7 +12,7 @@ import { ResponseDto } from 'src/util';
 import { UserDocument } from 'src/schemas';
 
 @Controller('user')
-@ApiTags('users')
+@ApiTags('user')
 export class UserController {
   constructor(private readonly service: UserService) {}
 
@@ -35,7 +35,7 @@ export class UserController {
     };
   }
 
-  @Post()
+  @Post('login')
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ description: 'login successful' })
   @ApiConflictResponse({
