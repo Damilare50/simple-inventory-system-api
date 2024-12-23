@@ -14,7 +14,7 @@ import { AuthService } from '../general/auth.service';
 export class UserService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
-    private readonly authService: AuthService,
+    public authService: AuthService,
   ) {}
 
   async createUser(dto: CreateUserDto): Promise<UserDocument> {
@@ -56,5 +56,10 @@ export class UserService {
       user,
       token,
     };
+  }
+  async validateUser(userId: string): Promise<UserDocument> {
+    const user = await this.userModel.findById(userId);
+
+    return user;
   }
 }
