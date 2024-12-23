@@ -16,6 +16,7 @@ import {
   ApiConflictResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
+  ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -36,6 +37,7 @@ export class CategoryController {
   @ApiUnauthorizedResponse({ description: 'unauthorized' })
   @ApiBadRequestResponse({ description: 'bad request' })
   @ApiConflictResponse({ description: 'category already exist' })
+  @ApiOperation({ summary: 'create a new category' })
   async createCategory(
     @Body() dto: CreateCategoryDto,
     @Headers('Authorization') auth: string,
@@ -53,6 +55,7 @@ export class CategoryController {
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ description: 'category listed successfully' })
   @ApiUnauthorizedResponse({ description: 'unauthorized' })
+  @ApiOperation({ summary: 'list all categories' })
   async listCategory(
     @Headers('Authorization') auth: string,
   ): Promise<ResponseDto<CategoryDocument[]>> {
@@ -70,6 +73,7 @@ export class CategoryController {
   @ApiOkResponse({ description: 'category listed successfully' })
   @ApiUnauthorizedResponse({ description: 'unauthorized' })
   @ApiNotFoundResponse({ description: 'not found' })
+  @ApiOperation({ summary: 'get a category by id' })
   async getCategory(
     @Param('id') id: string,
     @Headers('Authorization') auth: string,
@@ -89,6 +93,7 @@ export class CategoryController {
   @ApiUnauthorizedResponse({ description: 'unauthorized' })
   @ApiNotFoundResponse({ description: 'not found' })
   @ApiConflictResponse({ description: 'category already exist' })
+  @ApiOperation({ summary: 'update a category by id' })
   async updateCategory(
     @Param('id') id: string,
     @Headers('Authorization') auth: string,
@@ -108,6 +113,7 @@ export class CategoryController {
   @ApiOkResponse({ description: 'category deleted successfully' })
   @ApiUnauthorizedResponse({ description: 'unauthorized' })
   @ApiNotFoundResponse({ description: 'not found' })
+  @ApiOperation({ summary: 'delete a category by id' })
   async deleteCategory(
     @Param('id') id: string,
     @Headers('Authorization') auth: string,

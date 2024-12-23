@@ -5,6 +5,7 @@ import {
   ApiConflictResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
+  ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
 import { CreateUserDto, LoginDto, LoginResponseDto } from './dto';
@@ -23,6 +24,7 @@ export class UserController {
     description: 'user with email/username already exist!',
   })
   @ApiBadRequestResponse({ description: 'bad request' })
+  @ApiOperation({ summary: 'create a new user' })
   async createUser(
     @Body() data: CreateUserDto,
   ): Promise<ResponseDto<UserDocument>> {
@@ -42,6 +44,7 @@ export class UserController {
     description: 'invalid credentials provided.',
   })
   @ApiNotFoundResponse({ description: 'user not found' })
+  @ApiOperation({ summary: 'login a user' })
   async login(@Body() data: LoginDto): Promise<ResponseDto<LoginResponseDto>> {
     const response = await this.service.login(data);
 

@@ -22,20 +22,24 @@ class AuthGuard implements CanActivate {
       request.headers['authorization'] || request.headers['Authorization'];
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      console.log('no auth header');
       throw new UnauthorizedException();
     }
 
     const token = authHeader.split(' ')[1];
     if (!token) {
+      console.log('no token');
       throw new UnauthorizedException();
     }
 
     const { jwt, isValid } = await this.authService.decode(token);
     if (!isValid) {
+      console.log('invalid token');
       throw new UnauthorizedException();
     }
 
     if (jwt && !jwt.userId) {
+      console.log('no user id');
       throw new UnauthorizedException();
     }
 
