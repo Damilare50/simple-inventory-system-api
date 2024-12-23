@@ -18,10 +18,7 @@ export class CategoryService {
     private readonly userService: UserService,
   ) {}
 
-  async create(
-    dto: CreateCategoryDto,
-    auth: string,
-  ): Promise<CategoryDocument> {
+  async create(dto: CreateCategoryDto, auth: string): Promise<any> {
     const user = await this.getUser(auth);
 
     const _response = await this.model.findOne({ name: dto.name, user });
@@ -34,33 +31,38 @@ export class CategoryService {
       name: dto.name,
     });
 
-    return category;
+    return {
+      id: category.id,
+      name: category.name,
+    };
   }
 
-  async list(auth: string): Promise<CategoryDocument[]> {
+  async list(auth: string): Promise<any[]> {
     const user = await this.getUser(auth);
 
     const categories = await this.model.find({ user });
 
-    return categories;
+    return categories.map((category) => ({
+      id: category.id,
+      name: category.name,
+    }));
   }
 
-  async get(auth: string, id: string): Promise<CategoryDocument> {
+  async get(auth: string, id: string): Promise<any> {
     const user = await this.getUser(auth);
 
-    const category = await this.model.findOne({ user, id });
+    const category = await this.model.findOne({ user, _id: id });
     if (!category) {
       throw new NotFoundException();
     }
 
-    return category;
+    return {
+      id: category.id,
+      name: category.name,
+    };
   }
 
-  async update(
-    id: string,
-    dto: CreateCategoryDto,
-    auth: string,
-  ): Promise<CategoryDocument> {
+  async update(id: string, dto: CreateCategoryDto, auth: string): Promise<any> {
     const user = await this.getUser(auth);
 
     const _category = await this.model.findOne({ name: dto.name, user });
@@ -68,19 +70,24 @@ export class CategoryService {
       throw new ConflictException('category already exist');
     }
 
-    const category = await this.model.findOne({ user, id });
+    const category = await this.model.findOne({ user, _id: id });
     if (!category) {
       throw new NotFoundException();
     }
 
     category.name = dto.name;
-    return await category.save();
+    await category.save();
+
+    return {
+      id: category.id,
+      name: category.name,
+    };
   }
 
   async delete(id: string, auth: string): Promise<void> {
     const user = await this.getUser(auth);
 
-    const category = await this.model.findOne({ user, id });
+    const category = await this.model.findOne({ user, _id: id });
     if (!category) {
       throw new NotFoundException();
     }

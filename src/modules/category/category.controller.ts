@@ -23,7 +23,6 @@ import {
 import { CreateCategoryDto } from './dto';
 import { RequiresAuth } from '../../guards/auth.guard';
 import { ResponseDto } from '../../util';
-import { CategoryDocument } from '../../schemas';
 
 @Controller('category')
 @ApiTags('category')
@@ -41,7 +40,7 @@ export class CategoryController {
   async createCategory(
     @Body() dto: CreateCategoryDto,
     @Headers('Authorization') auth: string,
-  ): Promise<ResponseDto<CategoryDocument>> {
+  ): Promise<ResponseDto<any>> {
     const response = await this.service.create(dto, auth);
 
     return {
@@ -58,7 +57,7 @@ export class CategoryController {
   @ApiOperation({ summary: 'list all categories' })
   async listCategory(
     @Headers('Authorization') auth: string,
-  ): Promise<ResponseDto<CategoryDocument[]>> {
+  ): Promise<ResponseDto<any[]>> {
     const response = await this.service.list(auth);
 
     return {
@@ -77,7 +76,7 @@ export class CategoryController {
   async getCategory(
     @Param('id') id: string,
     @Headers('Authorization') auth: string,
-  ): Promise<ResponseDto<CategoryDocument>> {
+  ): Promise<ResponseDto<any>> {
     const response = await this.service.get(auth, id);
 
     return {
@@ -98,7 +97,7 @@ export class CategoryController {
     @Param('id') id: string,
     @Headers('Authorization') auth: string,
     @Body() dto: CreateCategoryDto,
-  ): Promise<ResponseDto<CategoryDocument>> {
+  ): Promise<ResponseDto<any>> {
     const response = await this.service.update(id, dto, auth);
 
     return {
@@ -118,7 +117,7 @@ export class CategoryController {
     @Param('id') id: string,
     @Headers('Authorization') auth: string,
   ): Promise<ResponseDto<void>> {
-    const response = await this.service.delete(auth, id);
+    const response = await this.service.delete(id, auth);
 
     return {
       message: 'category deleted successfully',
