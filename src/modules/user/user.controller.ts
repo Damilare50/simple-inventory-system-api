@@ -25,9 +25,7 @@ export class UserController {
   })
   @ApiBadRequestResponse({ description: 'bad request' })
   @ApiOperation({ summary: 'create a new user' })
-  async createUser(
-    @Body() data: CreateUserDto,
-  ): Promise<ResponseDto<UserDocument>> {
+  async createUser(@Body() data: CreateUserDto): Promise<ResponseDto<any>> {
     const response = await this.service.createUser(data);
 
     return {

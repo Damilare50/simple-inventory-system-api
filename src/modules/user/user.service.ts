@@ -17,7 +17,7 @@ export class UserService {
     public authService: AuthService,
   ) {}
 
-  async createUser(dto: CreateUserDto): Promise<UserDocument> {
+  async createUser(dto: CreateUserDto): Promise<any> {
     const _user = await this.userModel.findOne({
       $or: [{ username: dto.username }, { email: dto.email }],
     });
@@ -33,7 +33,11 @@ export class UserService {
       email: dto.email,
     });
 
-    return user;
+    return {
+      id: user._id,
+      username: user.username,
+      email: user.email,
+    };
   }
 
   async login(data: LoginDto): Promise<LoginResponseDto> {
@@ -53,7 +57,11 @@ export class UserService {
     const token = await this.authService.sign({ userId: user._id });
 
     return {
-      user,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+      },
       token,
     };
   }
