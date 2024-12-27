@@ -13,6 +13,7 @@ import {
 import { CategoryService } from './category.service';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiConflictResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -26,6 +27,7 @@ import { ResponseDto } from '../../util';
 
 @Controller('category')
 @ApiTags('category')
+@ApiBearerAuth('Authorization')
 @RequiresAuth()
 export class CategoryController {
   constructor(private readonly service: CategoryService) {}

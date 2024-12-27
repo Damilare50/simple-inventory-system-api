@@ -14,6 +14,7 @@ import {
 import { ProductService } from './product.service';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiConflictResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -31,6 +32,7 @@ import { ResponseDto } from '../../util';
 
 @RequiresAuth()
 @Controller('product')
+@ApiBearerAuth('Authorization')
 @ApiTags('product')
 export class ProductController {
   constructor(private readonly service: ProductService) {}

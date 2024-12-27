@@ -13,6 +13,14 @@ async function bootstrap() {
   const swagger = new DocumentBuilder()
     .setTitle('Simple Inventory API')
     .setVersion('1')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+      'Authorization',
+    )
     .build();
   const doc = SwaggerModule.createDocument(app, swagger, {
     deepScanRoutes: true,
